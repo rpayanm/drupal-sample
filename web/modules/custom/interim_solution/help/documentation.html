@@ -1,0 +1,44 @@
+<div class="interim-solution">
+  <h2>Overview</h2>
+  <p>This document explains how to work with the Interim Solution section.</p>
+
+  <h2>How it works</h2>
+  <p>You have to fill out this information in the Finding aid form, so the
+    system searches for its assets in the Catalog:</p>
+  <img src="&path&image1.png" alt="Foia tracking number">
+
+  <h2>Routes</h2>
+  <h3>Interim Solution Settings</h3>
+  <p>It is on <code>/admin/config/interim-solution/settings</code></p>
+  <img src="&path&image2.png" alt="Interim Solution Settings">
+
+  <p>If you check "Automatic Switch" option, you won't have to approve the
+    Finding aids' Asset from Catalog to show them to the users.</p>
+  <p>You have to add an email address to get a notification when a Finding aid
+    has assets in the Catalog. If this text field is empty, it won't send any
+    email.</p>
+
+  <h3>Interim Solution Report</h3>
+  <p>It can find on <code>/admin/reports/interim-solution</code></p>
+  <img src="&path&image3.png" alt="Interim Solution Report">
+  <p>It gives some information about the Interim Solution.</p>
+
+  <h3>Finding Aids</h3>
+  <p>You can find it on <code>/admin/content/finding_aids</code></p>
+  <img src="&path&image4.png" alt="Finding Aids">
+  <p>Here you can delete the Medias associated with the Finding aids that have
+    assets in the catalog, and they were approved by a content editor.</p>
+  <p>The red color is for the contents that you cannot delete because they do
+    not meet the conditions to that.</p>
+  <p>All administrators can access these routes, but you can give permission to
+    other users to access them.</p>
+
+  <h2>Queues</h2>
+  <p>There are two background processes in Drupal which are checking if there is
+    Finding aids with assets in the Catalog. The first one is for newly Finding
+    aids created, it searches if there are assets in the Catalog, and the second
+    one is responsible for finding updates that info when they already have
+    assets in there.</p>
+
+  <!--  <img src="&path&checker-1.png" alt=""/>-->
+</div>

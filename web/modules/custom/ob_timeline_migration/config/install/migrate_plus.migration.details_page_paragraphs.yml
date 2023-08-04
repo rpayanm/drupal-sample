@@ -1,0 +1,37 @@
+uuid: 5e5c8368-6d69-40d9-8907-c48d730ab18e
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ob_timeline_migration
+id: details_page_paragraphs
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: ob_migration_group
+label: 'Timeline Details Page (Node)'
+source:
+  plugin: d7_node
+  node_type: timeline_page
+  constants:
+    FULL_HTML_FORMAT: full_html
+process:
+  field_ed_description/value:
+    plugin: timeline_details_page
+    source: body/0/value
+    looking_for: description
+  field_ed_description/format: constants/FULL_HTML_FORMAT
+  field_ed_media_gallery:
+    plugin: timeline_details_page
+    source: body/0/value
+    looking_for: gallery
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: event_details
+migration_dependencies:
+  required:
+    - page_files

@@ -1,0 +1,7 @@
+name: Interim Solution
+type: module
+description: 'Drupal Media library integration with Catalog API'
+core_version_requirement: ^9 || ^10
+dependencies:
+  - finding_aids:finding_aids
+  - catalog:catalog

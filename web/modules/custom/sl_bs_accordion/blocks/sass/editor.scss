@@ -1,0 +1,15 @@
+[data-type="sl-bootstrap/accordion-item"] {
+  .accordion-item {
+    .expand-collapse {
+      flex-grow: 1;
+      padding-left: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .accordion-button {
+      .block-editor-rich-text__editable {
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+}

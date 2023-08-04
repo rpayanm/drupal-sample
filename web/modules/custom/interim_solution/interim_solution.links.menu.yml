@@ -1,0 +1,12 @@
+interim_solution.settings_form:
+  title: Interim Solution Settings
+  description: 'Configure Interim Solution settings.'
+  route_name: interim_solution.admin_settings_form
+  parent: system.admin_config_content
+  weight: 101
+
+interim_solution.report:
+  title: Interim Solution Report
+  description: 'View Interim Solution report.'
+  route_name: interim_solution.report
+  parent: system.admin_reports

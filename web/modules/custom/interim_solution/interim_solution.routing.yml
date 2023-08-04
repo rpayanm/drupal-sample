@@ -1,0 +1,19 @@
+interim_solution.admin_settings_form:
+  path: '/admin/config/interim-solution/settings'
+  defaults:
+    _form: '\Drupal\interim_solution\Form\AdminConfigForm'
+    _title: 'Interim Solution Settings'
+  requirements:
+    _permission: 'administer interim solution'
+  options:
+    _admin_route: TRUE
+
+interim_solution.report:
+  path: '/admin/reports/interim-solution'
+  defaults:
+    _controller: '\Drupal\interim_solution\Controller\InterimSolutionController::report'
+    _title: 'Interim Solution Report'
+  requirements:
+    _permission: 'administer interim solution'
+  options:
+    _admin_route: TRUE

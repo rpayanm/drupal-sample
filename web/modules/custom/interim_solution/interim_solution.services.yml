@@ -1,0 +1,17 @@
+services:
+  interim_solution.utils:
+    class: Drupal\interim_solution\Service\InterimSolutionUtils
+    arguments:
+      - '@config.factory'
+      - '@entity_type.manager'
+      - '@logger.factory'
+      - '@plugin.manager.mail'
+      - '@catalog.manager'
+
+  interim_solution.queue:
+    class: Drupal\interim_solution\Service\QueueService
+    arguments:
+      - '@entity_type.manager'
+      - '@interim_solution.utils'
+      - '@queue'
+      - '@catalog.manager'

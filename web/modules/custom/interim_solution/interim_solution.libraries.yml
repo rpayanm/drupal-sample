@@ -1,0 +1,20 @@
+nis_finding_aids_report:
+  js:
+    assets/js/nis_finding_aids_report.js: {}
+  css:
+    theme:
+      assets/css/nis_finding_aids_report.css: {}
+  dependencies:
+    - core/jquery
+    - core/once
+
+nis_finding_aids_full_mode:
+  css:
+    theme:
+      assets/css/nis_finding_aids_full_mode.css: {}
+
+help:
+  version: VERSION
+  css:
+    theme:
+      help/style.css: {}

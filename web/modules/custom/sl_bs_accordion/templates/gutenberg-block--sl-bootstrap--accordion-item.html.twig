@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a Gutenberg block server-side.
+ * This template should be overridden, and is only used if there's no default theme override.
+ *
+ * Available variables:
+ * - block_name: The Gutenberg block name.
+ * - block_content: The content of this block.
+ * - block_attributes: The attributes of this block.
+ * - attributes: array of HTML attributes populated by modules, intended to
+ *   be added to the main container tag of this template.
+ *
+ * @see template_preprocess_gutenberg_block()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set id_heading = block_attributes.idHeading %}
+{% set id_collapse = block_attributes.idCollapse %}
+{% set id_collapse_ref = "#" ~ block_attributes.idCollapse %}
+{% set heading =  block_attributes.heading %}
+{% set accordion_id_ref = "#" ~ block_attributes.accordionId %}
+{% set accordion_always_open = block_attributes.accordionAlwaysOpen %}
+{% set block_classes = block_attributes.className %}
+
+{% set classes = [
+  "accordion-item",
+  block_classes,
+] %}
+
+<div{{ attributes.addClass(classes) }}>
+    <h2 class="accordion-header" id="{{ id_heading }}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="{{ id_collapse_ref }}" aria-expanded="true"
+              aria-controls="{{ id_collapse }}">
+        {{ heading }}
+      </button>
+    </h2>
+    <div id="{{ id_collapse }}" class="accordion-collapse collapse"
+         aria-labelledby="{{ id_heading }}" data-bs-parent="{{ accordion_always_open ? 'false' : accordion_id_ref }}">
+      <div class="accordion-body">
+        {{ block_content }}
+      </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+name: Sunlight Boostrap Accordion
+type: module
+description: Provides the Boostrap Accordion Component.
+package: "Sunlight Boostrap"
+core_version_requirement: ^9 || ^10
+dependencies:
+  - sl_bootstrap:sl_bootstrap

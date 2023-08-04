@@ -1,0 +1,35 @@
+uuid: 13bb7084-ad04-4a5f-ab35-f076bbf909c8
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ob_timeline_migration
+id: era_paragraphs
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: ob_migration_group
+label: 'Paragraphs (Era)'
+source:
+  plugin: d7_node
+  node_type: timeline_era
+process:
+  field_era_title: title
+  field_era_start:
+    plugin: format_date
+    source: field_date/0/value
+    from_format: 'Y-m-d H:i:s'
+    to_format: Y-m-d
+  field_era_end:
+    plugin: format_date
+    source: field_date/0/value2
+    from_format: 'Y-m-d H:i:s'
+    to_format: Y-m-d
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: timeline_era
+migration_dependencies: {}

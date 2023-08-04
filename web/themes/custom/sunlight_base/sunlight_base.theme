@@ -1,0 +1,130 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+use Drupal\sunlight_base\Sunlight;
+
+/**
+ * Implements hook_preprocess_image_widget().
+ */
+function sunlight_preprocess_image_widget(array &$variables) {
+  $data = &$variables['data'];
+
+  // This prevents image widget templates from rendering preview container HTML
+  // to users that do not have permission to access these previews.
+  // @todo revisit in https://drupal.org/node/953034
+  // @todo revisit in https://drupal.org/node/3114318
+  if (isset($data['preview']['#access']) && $data['preview']['#access'] === FALSE) {
+    unset($data['preview']);
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter for blocks.
+ */
+function sunlight_gin_theme_suggestions_block_alter(&$suggestions, $variables) {
+  // Load theme suggestions for blocks from parent theme.
+  foreach ($suggestions as &$suggestion) {
+    $suggestion = str_replace('sunlight_base_', 'stable9_', $suggestion);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess_form_element(&$variables) {
+  Sunlight::formAddDescriptionClass($variables);
+
+  switch ($variables["element"]["#type"]) {
+    case 'radio':
+    case 'checkbox':
+      $variables["label"]["#attributes"]["class"][] = 'form-check-label';
+      $variables["attributes"]["class"][] = 'form-check';
+      break;
+    default:
+      $variables["label"]["#attributes"]["class"][] = 'form-label';
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess_input(&$variables) {
+  if (isset($variables["attributes"]["class"])) {
+    if (($key = array_search('form-text', $variables["attributes"]["class"])) !== FALSE) {
+      unset($variables["attributes"]["class"][$key]);
+    }
+  }
+
+  Sunlight::formAddErrorClass($variables);
+
+  $type_class = 'form-control';
+
+  switch ($variables["element"]["#type"]) {
+    case 'radio':
+    case 'checkbox':
+      $type_class = 'form-check-input';
+      break;
+    case 'range':
+      $type_class = 'form-range';
+      break;
+    case 'submit':
+      $type_class = 'btn btn-primary';
+      break;
+    case 'textfield':
+      break;
+  }
+
+  $variables["attributes"]["class"][] = $type_class;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess_textarea(&$variables) {
+  $variables['attributes']['class'][] = 'form-control';
+  Sunlight::formAddErrorClass($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess_select(&$variables) {
+  $variables['attributes']['class'][] = 'form-control';
+  Sunlight::formAddErrorClass($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess_fieldset(&$variables) {
+  Sunlight::formAddDescriptionClass($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function sunlight_base_preprocess(&$variables, $hook) {
+  switch ($hook) {
+    case  'webform':
+    case 'form':
+      $variables['#attached']['library'][] = 'sunlight_base/bs_forms';
+      break;
+    case 'menu_local_tasks':
+      $variables['#attached']['library'][] = 'sunlight_base/bs_navs_tabs';
+      break;
+    case 'pager':
+    case 'views_mini_pager':
+      $variables['#attached']['library'][] = 'sunlight_base/bs_pagination';
+      break;
+  }
+
+  $themeHandler = Drupal::service('theme_handler');
+  $variables['theme_path'] = $themeHandler->getTheme($themeHandler->getDefault())
+    ->getPath();
+}
+

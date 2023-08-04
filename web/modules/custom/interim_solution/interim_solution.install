@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for interim_solution module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Create a table to store if the node has digitalized assets.
+ */
+function interim_solution_schema() {
+  $schema['interim_solution'] = [
+    'description' => 'The base table for interim_solution.',
+    'fields' => [
+      'nid' => [
+        'description' => 'The node ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'available_catalog_content' => [
+        'description' => 'If the node has digitalized assets in the Catalog.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['nid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function interim_solution_uninstall() {
+  $connection = Drupal::database();
+  $connection->schema()->dropTable('interim_solution');
+}

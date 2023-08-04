@@ -1,0 +1,1 @@
+!function(o,a,c,i){"use strict";a.behaviors.sl_bs_accordion={attach:function(a,c){var i=o('.accordion[data-open-first-item="1"]').find(".accordion-item:first-child");i.find(".accordion-button").removeClass("collapsed"),i.find(".accordion-collapse").addClass("show")}}}(jQuery,Drupal,once,drupalSettings);

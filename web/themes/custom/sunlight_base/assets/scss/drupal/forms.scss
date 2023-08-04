@@ -1,0 +1,48 @@
+html {
+  form {
+    .form-item {
+      margin-bottom: 1rem;
+    }
+
+    legend {
+      font-size: 1rem;
+    }
+  }
+
+  &.js {
+    body {
+      .js-hide {
+        display: none;
+      }
+    }
+  }
+
+  .bootstrap summary {
+    display: none;
+  }
+}
+
+.webform-multiple-table--operations .form-control.is-invalid, .was-validated .webform-multiple-table--operations .form-control:invalid {
+  background-image: none!important;
+  padding-right: 2px;
+}
+
+.webform-multiple-table--operations {
+  input[type="image"] {
+    width: auto;
+    margin: 0 auto;
+  }
+}
+
+.form-required:after {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 0.3em;
+  content: "";
+  vertical-align: super;
+  /* Use a background image to prevent screen readers from announcing the text. */
+  background-image: url(../../../../../../core/misc/icons/ee0000/required.svg);
+  background-repeat: no-repeat;
+  background-size: 6px 6px;
+}

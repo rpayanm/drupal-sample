@@ -1,0 +1,23 @@
+name: Sunlight Base Theme
+type: theme
+'base theme': stable9
+starterkit: true
+version: VERSION
+libraries:
+  - sunlight_base/base
+core_version_requirement: ^9
+generator: 'starterkit_theme:9.5.8'
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Left sidebar'
+  sidebar_second: 'Right sidebar'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'

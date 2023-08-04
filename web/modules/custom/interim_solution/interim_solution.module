@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Interim Solution module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\interim_solution\Service\InterimSolutionUtils;
+use Drupal\interim_solution\Service\QueueService;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function interim_solution_theme($existing, $type, $theme, $path) {
+  $templates = $path . '/templates';
+  return [
+    'media__catalog_media__default' => [
+      'template' => 'media--catalog-media--default',
+      'path' => $templates,
+      'base hook' => 'media',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function interim_solution_preprocess(&$variables, $hook) {
+  if ($hook == 'node' && $variables['view_mode'] == 'full' && $variables['node']->getType() == 'finding_aid') {
+    $node = $variables['node'];
+
+    /** @var \Drupal\interim_solution\Service\InterimSolutionUtils $util_service */
+    $util_service = Drupal::service('interim_solution.utils');
+    $show_catalog_data = $util_service->showCatalogData($node);
+
+    $current_user = Drupal::currentUser();
+    if (!$current_user->isAuthenticated()) {
+      $variables['#cache']['tags'][] = 'interim_solution:finding_aid:anonymous';
+
+      if ($show_catalog_data) {
+        unset($variables['content'][InterimSolutionUtils::FIELD_CATALOG_MEDIAS]);
+      }
+      else {
+        unset($variables['content'][InterimSolutionUtils::CATALOG_ID_FIELD]);
+      }
+    }
+    else {
+      if (!$show_catalog_data) {
+        $variables['attributes']['class'][] = 'hide-catalog-data';
+
+        $variables['#attached']['library'][] = 'interim_solution/nis_finding_aids_full_mode';
+      }
+    }
+  }
+
+  if (isset($variables['view']) && $view = $variables['view']) {
+    if ($view->id() == 'finding_aids_report') {
+      $variables['#attached']['library'][] = 'interim_solution/nis_finding_aids_report';
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function interim_solution_cron() {
+  /** @var \Drupal\interim_solution\Service\QueueService $queue_service */
+  $queue_service = Drupal::service('interim_solution.queue');
+
+  $queue_update = Drupal::queue(QueueService::FIRST_TIME_QUEUE);
+  if ($queue_update->numberOfItems() == 0) {
+    $queue_service->createFirstTimeQueue();
+  }
+
+  $queue_update = Drupal::queue(QueueService::UPDATE_QUEUE);
+  if ($queue_update->numberOfItems() == 0) {
+    $queue_service->createUpdateQueue();
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function interim_solution_mail($key, &$message, $params) {
+  if ($key == 'finding_aids_digitalized') {
+    $message['subject'] = $params['subject'];
+    $message['body'][] = $params['body'];
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function interim_solution_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_finding_aid_edit_form' || $form_id == 'node_finding_aid_form') {
+    $config = Drupal::config('interim_solution.settings');
+    $automatic_switch = $config->get('automatic_switch');
+    if ($automatic_switch) {
+      $form["field_show_catalog_content"]["widget"]["value"]["#default_value"] = 1;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function interim_solution_entity_presave($entity) {
+  if ($entity instanceof NodeInterface) {
+    if ($entity->getType() == 'finding_aid' && $entity->status->value == 1) {
+      /** @var \Drupal\interim_solution\Service\InterimSolutionUtils $util_service */
+      $util_service = Drupal::service('interim_solution.utils');
+
+      $util_service->checkForDigitalObjects($entity);
+    }
+  }
+}

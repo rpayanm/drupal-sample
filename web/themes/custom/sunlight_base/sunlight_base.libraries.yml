@@ -1,0 +1,47 @@
+base:
+  js:
+    public/base/base.js: {}
+  css:
+    theme:
+      public/base/base.css: {weight: 100}
+  dependencies:
+    - sunlight_base/bootstrap
+    - sunlight_base/bootstrap-icons
+    - sunlight_base/tailwindcss
+    - core/drupal
+    - core/jquery
+    - core/once
+    - core/drupalSettings
+
+tailwindcss:
+  js:
+    public/base/tailwind.js: {}
+  css:
+    component:
+      public/base/tailwind.css: {}
+
+bootstrap:
+  js:
+    public/bootstrap/bootstrap.js: {}
+  css:
+    component:
+      public/bootstrap/bootstrap.css: {}
+
+bootstrap-icons:
+  css:
+    component:
+      public/bootstrap/bootstrap-icons.css: {}
+
+gutenberg-edit:
+  js:
+    public/base/gutenberg-edit.js: {}
+  css:
+    component:
+      public/base/gutenberg-edit.css: {}
+
+gutenberg-view:
+  js:
+    public/base/gutenberg-view.js: {}
+  css:
+    component:
+      public/base/gutenberg-view.css: {}

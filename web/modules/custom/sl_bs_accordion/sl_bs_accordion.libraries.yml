@@ -1,0 +1,21 @@
+block-edit:
+  version: VERSION
+  js:
+    dist/index.js: {minified: true}
+  css:
+    theme:
+      dist/style.css: {minified: true}
+      dist/editor.css: {minified: true}
+  dependencies:
+    - gutenberg/edit-node
+
+block-view:
+  version: VERSION
+  js:
+    dist/sl-bs-accordion.js: {minified: true}
+  css:
+    theme:
+      dist/style.css: {minified: true}
+  dependencies:
+    - core/drupal
+    - core/jquery

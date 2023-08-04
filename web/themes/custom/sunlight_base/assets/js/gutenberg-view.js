@@ -1,0 +1,1 @@
+import '../scss/gutenberg-view.scss';

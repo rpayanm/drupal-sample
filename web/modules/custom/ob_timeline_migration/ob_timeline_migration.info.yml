@@ -1,0 +1,13 @@
+name: Ob Timeline Migration
+type: module
+description: The migration for Ob Library Timeline.
+core_version_requirement: ^8 || ^9
+package: Ob Library Migration
+dependencies:
+  - drupal:node
+  - drupal:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - ob_migration_group:ob_migration_group
+  - ob_basic_page_migration:ob_basic_page_migration
+  - ob_details_event:ob_details_event

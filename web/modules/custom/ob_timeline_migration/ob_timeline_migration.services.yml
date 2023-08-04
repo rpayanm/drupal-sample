@@ -1,0 +1,7 @@
+services:
+  ob_timeline_migration.migration_subscriber:
+    class: Drupal\ob_timeline_migration\EventSubscriber\MigrationSubscriber
+    tags:
+      - {name: event_subscriber}
+    arguments:
+      ['@entity_type.manager']

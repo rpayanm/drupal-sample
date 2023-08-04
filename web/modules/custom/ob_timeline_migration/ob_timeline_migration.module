@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains ob_timeline_migration.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ob_timeline_migration_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ob_migration_group module.
+    case 'help.page.ob_timeline_migration':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The migrations of the timeline for ob Library migrations.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

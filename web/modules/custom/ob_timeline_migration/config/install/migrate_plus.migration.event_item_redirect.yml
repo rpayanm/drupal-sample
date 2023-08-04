@@ -1,0 +1,49 @@
+uuid: bf7ab625-2b71-4b70-9a9e-f1d43e5bbd0b
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ob_timeline_migration
+id: event_item_redirect
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Drupal 7'
+  - Content
+migration_group: ob_migration_group
+label: 'Paragraphs (Event)'
+source:
+  plugin: d7_node
+  node_type: timeline_item
+  constants:
+    LANGUAGE_EN: 'en'
+    STATUS_CODE: '301'
+    TIMELINE_URI: 'internal:/timeline#event-number-'
+process:
+  redirect_source/path:
+    plugin: timeline_item_field
+    source: nid
+    looking_for: alias
+  pseudo_pid_arr:
+    plugin: migration_lookup
+    migration: event_paragraphs
+    source: nid
+  pseudo_pid:
+    plugin: extract
+    source: '@pseudo_pid_arr'
+    index:
+      - 0
+  redirect_redirect/uri:
+    plugin: concat
+    source:
+      - constants/TIMELINE_URI
+      - '@pseudo_pid'
+  language: constants/LANGUAGE_EN
+  status_code: constants/STATUS_CODE
+destination:
+  plugin: 'entity:redirect'
+migration_dependencies:
+  required:
+    - event_paragraphs
